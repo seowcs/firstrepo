@@ -1,7 +1,8 @@
 import  express, { response }  from "express";
 import * as mindee from "mindee";
 import cors from 'cors';
-
+import authRouter from './routes/authRouter'
+import recordsRouter from './routes/recordsRouter'
 import multer from "multer";
 const mindeeClient = new mindee.Client({apiKey:"6606579fbe76a733f811d96b84725364"})
 
@@ -66,6 +67,10 @@ app.post('/parse',  upload.single('file'), (req,res)=>{
     
      parseInvoice();
 })
+
+app.use('/auth', authRouter);
+app.use('/records', recordsRouter);
+
 
 app.listen(8800, ()=>{
     console.log("Connected to server");

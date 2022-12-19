@@ -1,8 +1,8 @@
 import  express, { response }  from "express";
 import * as mindee from "mindee";
 import cors from 'cors';
-import authRouter from './routes/authRouter'
-import recordsRouter from './routes/recordsRouter'
+import authRouter from './routes/authRouter.js'
+import recordsRouter from './routes/recordsRouter.js'
 import multer from "multer";
 const mindeeClient = new mindee.Client({apiKey:"6606579fbe76a733f811d96b84725364"})
 

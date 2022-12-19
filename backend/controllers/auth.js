@@ -1,6 +1,6 @@
-import bcrypt, { decodeBase64 } from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
+import { db } from '../db.js';
 //data is an array of rowdatapackets
 
 export const register = (req,res) => {
@@ -10,10 +10,10 @@ export const register = (req,res) => {
         if (err) return res.status(500).json(err);
         if (data.length) return res.status(409).json('User already exists!');
 
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+        const  salt = bcrypt.genSaltSync(10);
+        const hashedPassword =  bcrypt.hashSync(req.body.password, salt);
 
-        const q = 'INSERT INTO users (username, email, password) VALUES ?';
+        const q = 'INSERT INTO users (username, email, password) VALUES (?)';
         const values = [req.body.username, req.body.email, hashedPassword];
 
         db.query(q, [values],(err,data) => {

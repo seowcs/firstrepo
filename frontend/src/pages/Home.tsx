@@ -10,6 +10,7 @@ import {
   Spacer,
   Heading,
   Text,
+  Center,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { parseInvoice, handleClick } from "../features/info/infoSlice";
@@ -65,7 +66,7 @@ const Home = (props: Props) => {
         bgPosition="center"
         bgRepeat="no-repeat"
         bgSize="cover"
-        position="absolute"
+        position="relative"
       >
         <Particles
           id="tsparticles"
@@ -183,8 +184,15 @@ const Home = (props: Props) => {
           loaded={particlesLoaded}
         />
         <Navbar />
-        <Flex justify="center" direction="column" px="100px">
-          <Heading as="h1" size={["2xl", "3xl"]} mb="5" mt="120px">
+        <Center
+          position="absolute"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -50%)"
+          flexDirection="column"
+          px="100px"
+        >
+          <Heading as="h1" size={["2xl", "3xl"]} mb="5">
             Invoice <span style={{ color: "#5a9f4d" }}>Parsley</span>
           </Heading>
           <Text as="h2" size={["l", "xl"]} mb="4">
@@ -255,7 +263,7 @@ const Home = (props: Props) => {
               <Input hidden type="submit" onClick={handleSubmit} id="submit" />
             </Button>
           </Flex>
-        </Flex>
+        </Center>
       </Flex>
     </div>
   );

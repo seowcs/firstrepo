@@ -11,6 +11,7 @@ import {
   Button,
   Avatar,
 } from "@chakra-ui/react";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 const Login = () => {
   return (
     <Center
@@ -21,7 +22,7 @@ const Login = () => {
       bgRepeat="no-repeat"
       bgSize="cover"
     >
-      <VStack
+      <Flex
         bgColor="rgba( 255, 255, 255, 0.3 )"
         alignSelf="center"
         boxShadow="0 8px 32px 0 rgba( 31, 38, 135, 0.37 )"
@@ -30,13 +31,17 @@ const Login = () => {
         border="1px solid rgba( 255, 255, 255, 0.18 )"
         width={["70%", "60%", "50%", "42%", "35%"]}
         px="45px"
-        py="60px"
+        py="100px"
         alignItems="center"
         justifyContent="center"
-        spacing={4}
+        direction="column"
+        position="relative"
       >
-        <Avatar bg="royalblue" size="lg" />
-        <Heading mb="30px">Login</Heading>
+        <Link href="/">
+          <ArrowBackIcon boxSize={6} position="absolute" top="4%" left="3%" />
+        </Link>
+        <Avatar bg="royalblue" size="lg" mb={4} />
+        <Heading mb={6}>Login</Heading>
         <VStack spacing="15px">
           <Input variant="solid" width="120%" placeholder="Username" />
 
@@ -52,7 +57,7 @@ const Login = () => {
             Login
           </Button>
         </VStack>
-      </VStack>
+      </Flex>
     </Center>
   );
 };

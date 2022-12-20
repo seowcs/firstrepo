@@ -28,6 +28,7 @@ app.post('/parse',  upload.single('file'), (req,res)=>{
     console.log(file)
     const parseInvoice = async () => {
         try {
+            
             const doc = mindeeClient.docFromPath(`C:/Users/Admin/Desktop/invoiceapp/backend/uploads/${file.filename}`);
             const resp = await doc.parse(mindee.InvoiceV4);
     
@@ -56,7 +57,8 @@ app.post('/parse',  upload.single('file'), (req,res)=>{
               currency: currency,
               totalAmount: totalAmount,
               totalNet: totalNet,
-              totalTax: totalTax
+              totalTax: totalTax,
+              
               });
     
         } catch (error) {

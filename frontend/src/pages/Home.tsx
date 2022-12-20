@@ -13,7 +13,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { parseInvoice, handleClick } from "../features/info/infoSlice";
+import { parseInvoice, handleClick, addFile } from "../features/info/infoSlice";
 import background from "../images/royalbluewhite.svg";
 import { RiUpload2Fill } from "react-icons/ri";
 import Navbar from "../components/Navbar";
@@ -29,21 +29,19 @@ const Home = (props: Props) => {
   const newState = useAppSelector((state) => state);
   console.log(newState);
   const [file, setFile] = useState<any>(null);
+  console.log(file)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("file", file);
-    // dispatch(parseInvoice(formData));
+    dispatch(parseInvoice(formData));
     navigate("/results");
   };
 
   const particlesInit = useCallback(async (engine: Engine) => {
-    console.log(engine);
+   
 
-    // you can initialize the tsParticles instance (engine) here, adding custom shapes or presets
-    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-    // starting from v2 you can add only the features you need reducing the bundle size
     await loadFull(engine);
   }, []);
 
@@ -242,6 +240,7 @@ const Home = (props: Props) => {
                 if (!e.target.files) return;
                 else {
                   setFile(e.target.files?.[0]);
+                  dispatch(addFile(e.target.files?.[0]))
                 }
               }}
             />

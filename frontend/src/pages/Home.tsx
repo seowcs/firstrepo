@@ -33,8 +33,14 @@ const Home = (props: Props) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    // try {
+    //   await axios.post
+    // } catch (error) {
+      
+    // }
     let formData = new FormData();
     formData.append("file", file);
+    
     dispatch(parseInvoice(formData));
     navigate("/results");
   };

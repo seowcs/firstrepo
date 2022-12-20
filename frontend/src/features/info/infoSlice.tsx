@@ -11,9 +11,10 @@ export interface invoiceData {
   invoiceDate: number | undefined | null;
   currency: string | undefined | null;
   totalAmount: number | undefined | null;
-  totalNet: number | undefined | null;
+  
   totalTax: number | undefined | null;
   file: any;
+  fileURL: string;
 }
 
 export interface invoiceStateType {
@@ -34,9 +35,10 @@ const initialState = {
     invoiceDate: null,
     currency: null,
     totalAmount: null,
-    totalNet: null,
+    
     totalTax: null,
     file: null,
+    fileURL: ''
   },
 } as invoiceStateType;
 

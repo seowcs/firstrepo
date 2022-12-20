@@ -37,7 +37,7 @@ const Results = (props: Props) => {
 
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
     
-
+  
 
   const invoiceObj = [
     {
@@ -59,11 +59,17 @@ const Results = (props: Props) => {
       console.log(state);
   }
 
+   
+  const backURL = newState?.data?.fileURL.slice(0); 
+  const frontURL = 'data:application/pdf;base64,'
+  const newURL = frontURL.concat(backURL)
+  console.log(newURL)
+
   return (
     <Flex
       bgImage={background}
       width="100%"
-      height="170vh"
+      height="180vh"
       direction="column"
       bgSize="cover"
       position="relative"
@@ -100,41 +106,36 @@ const Results = (props: Props) => {
             </GridComponent> 
           {/* datasource only accepts arrays */}
 
-      {pdfDataURL && <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
+      {(!newState?.loading) && <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
         <Box style={{
         border: '1px solid rgba(0, 0, 0, 0.3)',
         height: '80%',
         width: '70%',
         
     }} my={10}>
-        <Viewer fileUrl={pdfDataURL} plugins={[defaultLayoutPluginInstance]} />
+      
+        <Viewer fileUrl={ newURL || pdfDataURL} plugins={[defaultLayoutPluginInstance]} />
         </Box>
       
       </Worker>}
       
 
 
-        <HStack
-          spacing="300px"
-          maxWidth="100%"
-          alignSelf="center"
-          justify="space-between"
-        >
-          <Button zIndex="1" bgColor="royalblue" variant="solid" color="white">
-            Save to Records
-          </Button>
+
+
           <Link to="/">
             <Button
               zIndex="1"
               bgColor="parsley"
               variant="solid"
+              
               color="white"
               onClick={() => dispatch(handleClick())}
             >
               Parse Another Invoice
             </Button>
           </Link>
-        </HStack>
+        
       </Flex>
 
       <Box width="100%" position="absolute" bottom="0" height="200px">

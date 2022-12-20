@@ -1,5 +1,5 @@
 import express from 'express';
-
+import { getData, updateData } from '../controllers/parse.js';
 import multer from "multer";
 import * as mindee from "mindee";
 import fs from "fs";
@@ -25,9 +25,6 @@ const mindeeClient = new mindee.Client({apiKey:"6606579fbe76a733f811d96b84725364
 router.post('/',  upload.single('file'), (req,res)=>{
     const file = req.file;
     
-
-
-
     const parseInvoice = async () => {
         try {
             
@@ -89,6 +86,9 @@ router.post('/',  upload.single('file'), (req,res)=>{
     
      parseInvoice();
 })
+
+router.post('/data', getData)
+router.post('/data/update', updateData)
 
 
 

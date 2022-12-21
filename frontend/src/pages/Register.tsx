@@ -31,7 +31,7 @@ const Register = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
+ 
   const handleClick = async (e: any) => {
     e.preventDefault();
     try {

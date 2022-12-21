@@ -1,4 +1,7 @@
-import React from "react";
+
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import type { userData } from '../features/info/authSlice'
+import { login, logout} from '../features/info/authSlice'
 import background from "../images/royalbluewhite.svg";
 import {
   Flex,
@@ -12,7 +15,46 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ChangeEvent, useEffect, useState } from "react";
 const Login = () => {
+  const dispatch = useAppDispatch();
+  const newState = useAppSelector((state) => state.authSlice)
+  const user = localStorage.getItem('user') !== null  ? JSON.parse(localStorage.user) : {
+    loading: false,
+    error: "",
+    isLoggedIn: false,
+    data: {
+        username: "",
+        email: ""
+    }
+}
+  const [userInfo, setUserInfo] = useState({
+    username:'',
+    password:''
+  })
+  console.log(user)
+
+
+  
+  
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserInfo((prev) => ({...prev, [e.target.name]: e.target.value}))
+    
+   }
+
+  const handleSubmit = (e: any) => {
+      e.preventDefault();
+      dispatch(login(userInfo))
+      
+    }
+
+    useEffect(() => {
+      console.log()
+    
+      
+    }, [localStorage])
+    
+
   return (
     <Center
       bgImage={background}
@@ -32,7 +74,7 @@ const Login = () => {
         width={["70%", "60%", "50%", "42%", "35%"]}
         px="45px"
         py="100px"
-        alignItems="center"
+        alignItems="center" 
         justifyContent="center"
         direction="column"
         position="relative"
@@ -43,9 +85,9 @@ const Login = () => {
         <Avatar bg="royalblue" size="lg" mb={4} />
         <Heading mb={6}>Login</Heading>
         <VStack spacing="15px">
-          <Input variant="solid" width="120%" placeholder="Username" />
+          <Input variant="solid" width="120%" placeholder="Username" name="username" onChange={handleChange} />
 
-          <Input variant="solid" width="120%" placeholder="Password" />
+          <Input variant="solid" width="120%" placeholder="Password" name="password" onChange={handleChange}/>
 
           <Text fontSize={["xs", "sm"]}>
             Don't have an account?{" "}
@@ -53,9 +95,10 @@ const Login = () => {
               Register
             </Link>
           </Text>
-          <Button bgColor="parsley" color="white">
+          <Button onClick={handleSubmit} bgColor="parsley" color="white">
             Login
           </Button>
+          <Text onClick={()=> {dispatch(logout())}}>Logout</Text>
         </VStack>
       </Flex>
     </Center>

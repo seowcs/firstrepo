@@ -20,7 +20,7 @@ type Props = {};
 const Results = (props: Props) => {
   const [pdfDataURL, setPdfDataURL] = useState<any>(null)
   const dispatch = useAppDispatch();
-  const newState = useAppSelector((state) => state);
+  const newState = useAppSelector((state) => state.infoSlice);
   console.log(newState);
   const { file, ...tableData} = newState.data
   
@@ -44,21 +44,21 @@ const Results = (props: Props) => {
     
   
 
-  // const invoiceObj = [
-  //   {
-  //     invoiceNumber: "2022-07-001",
-  //     customerName: "YUEN SIK WENG",
-  //     customerAddress: "11 Upper Boon Keng Road #16-919 Singapore 380011",
-  //     supplierName: "LIAN SOON CONSTRUCTION PTE LTD",
-  //     supplierAddress:
-  //       "21A Senoko Loop, Lian Soon Industrial Building Singapore 758174",
-  //     invoiceDate: "2022-07-04",
-  //     currency: "SGD",
-  //     totalAmount: 1500,
-  //     totalNet: 1500,
-  //     totalTax: 0
-  //   },
-  // ];
+  const invoiceObj = [
+    {
+      invoiceNumber: "2022-07-001",
+      customerName: "YUEN SIK WENG",
+      customerAddress: "11 Upper Boon Keng Road #16-919 Singapore 380011",
+      supplierName: "LIAN SOON CONSTRUCTION PTE LTD",
+      supplierAddress:
+        "21A Senoko Loop, Lian Soon Industrial Building Singapore 758174",
+      invoiceDate: "2022-07-04",
+      currency: "SGD",
+      totalAmount: 1500,
+      totalNet: 1500,
+      totalTax: 0
+    },
+  ];
 
   const dataSourceChanged=(state: any)=> {
       console.log(state);
@@ -109,7 +109,7 @@ const Results = (props: Props) => {
         <ColumnDirective field='invoicedate' headerText="Invoice Date"/>
         <ColumnDirective field='currency' headerText="Currency"/>
         <ColumnDirective field='totalamount' headerText="Total Amount"/>
-        {/* <ColumnDirective field='totalNet ' headerText="Net Total"/> */}
+        
         <ColumnDirective field='totaltax' headerText="Tax Amount"/>
         
     </ColumnsDirective>

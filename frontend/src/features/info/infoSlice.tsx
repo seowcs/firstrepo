@@ -13,7 +13,7 @@ export interface invoiceData {
   totalAmount: number | undefined | null;
   
   totalTax: number | undefined | null;
-  file: any;
+  file: any; 
   fileURL: string;
 }
 

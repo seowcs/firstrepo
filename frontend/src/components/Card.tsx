@@ -9,31 +9,48 @@ import {
   HStack,
   VStack,
   Text,
+  Box,
+  IconButton
 } from "@chakra-ui/react";
-import { TbFileInvoice } from "react-icons/tb";
+import { CloseIcon } from '@chakra-ui/icons'
 
-const InvCard = () => {
+
+interface CardProps {
+  id: number;
+  invNumber:string;
+  time: string;
+  supplierName: string;
+}
+
+
+const InvCard = ({id, invNumber, time, supplierName}: CardProps) => {
   return (
     <>
       <Card bgColor="white" variant="elevated">
         <CardHeader>
           <Flex justify="space-between" align="center">
-            <Heading size="md">Invoice1</Heading>
+            <Heading size="md">Invoice {id}</Heading>
 
-            <TbFileInvoice fontSize="28px" />
+            <IconButton colorScheme='red' size='sm' fontSize='13px' 
+ aria-label='Delete Record' icon={<CloseIcon />} />
           </Flex>
         </CardHeader>
 
         <CardBody pt="0">
-          <VStack align="flex-start" justify="flex-start" spacing={2}>
+          <VStack align="flex-start" justify="flex-start" spacing={2} wrap='wrap' textAlign='left'>
+            
             <Text>
-              <Text as="b">Invoice No:</Text> 1
+              <Text as="b">Invoice No:</Text> {invNumber}
             </Text>
-            <Text>
-              <Text as="b">Date:</Text> 28/10/2003
+
+            <Box >
+            <Text >
+              <Text as="b">Time:</Text> {time}
             </Text>
+            </Box>
+            
             <Text>
-              <Text as="b">Supplier Name:</Text> SAF
+              <Text as="b">Supplier Name:</Text> {supplierName}
             </Text>
           </VStack>
         </CardBody>

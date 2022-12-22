@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { db } from '../db.js';
-//data is an array of rowdatapackets
+//data is an array of rowdatapackets 
 
 export const register = (req,res) => {
     const q = 'SELECT * FROM users WHERE username = ? OR email =?';
@@ -42,10 +42,8 @@ export const login = (req,res) => {
         id: data[0].id}, 'jwtkey')
 
     const { password, ...other} = data[0];
-
     res.cookie('access_token', token, {httpOnly: true}).status(200).json(other);//Success
-
-
+        
     
     })
 

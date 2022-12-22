@@ -10,13 +10,21 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import React from "react";
+import {useEffect} from "react";
 import Navbar from "../components/Navbar";
 import background from "../images/royalbluewhite.svg";
 import { TbFileInvoice } from "react-icons/tb";
 import InvCard from "../components/Card";
 
 const Records = () => {
+
+  useEffect(() => {
+    
+  
+
+  }, [])
+  
+
   return (
     <div>
       <Flex
@@ -50,10 +58,10 @@ const Records = () => {
         </Flex>
 
         <SimpleGrid minChildWidth="200px" width="90%" spacing="40px">
-          <InvCard />
-          <InvCard />
-          <InvCard />
-          <InvCard />
+          <InvCard id={1} invNumber="235432" time='' supplierName="re" />
+          <InvCard id={2} invNumber="3253" time='' supplierName="rerer" />
+          <InvCard id={3} invNumber="234234" time='' supplierName="wer" />
+          <InvCard id={4} invNumber="234243" time='' supplierName="SAF" />
         </SimpleGrid>
       </Flex>
     </div>

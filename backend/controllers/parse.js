@@ -1,7 +1,7 @@
 import { db } from '../db.js';
  
  export const getData = (req, res) => {
-    const q = 'SELECT invoicenumber, customername, customeraddress, suppliername, supplieraddress, invoicedate, currency, totalamount, totaltax FROM records ORDER BY id DESC LIMIT 1';
+    const q = 'SELECT invoicenumber, customername, customeraddress, suppliername, supplieraddress, invoicedate, currency, totalamount, totaltax, parsedate FROM records ORDER BY id DESC LIMIT 1';
 
     db.query(q, (err, results) => {
         if (err) return res.status(500).json(err);

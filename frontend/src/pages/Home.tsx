@@ -21,6 +21,7 @@ import { useCallback } from "react";
 import Particles from "react-tsparticles";
 import type { Container, Engine } from "tsparticles-engine";
 import { loadFull } from "tsparticles";
+import moment from 'moment';
 type Props = {};
 
 const Home = (props: Props) => {
@@ -29,25 +30,27 @@ const Home = (props: Props) => {
   const newState = useAppSelector((state) => state);
   console.log(newState);
   const [file, setFile] = useState<any>(null);
-  console.log(file)
+  console.log(file);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     // try {
     //   await axios.post
     // } catch (error) {
-      
-    // }
+
+    let time = moment().format('MMMM Do YYYY, h:mm:ss a');
     let formData = new FormData();
     formData.append("file", file);
-    
+    formData.append('uid', newState.authSlice.data.id);
+    formData.append('time', time);
+    console.log(formData);
+
     dispatch(parseInvoice(formData));
+
     navigate("/results");
   };
 
   const particlesInit = useCallback(async (engine: Engine) => {
-   
-
     await loadFull(engine);
   }, []);
 
@@ -246,7 +249,7 @@ const Home = (props: Props) => {
                 if (!e.target.files) return;
                 else {
                   setFile(e.target.files?.[0]);
-                  dispatch(addFile(e.target.files?.[0]))
+                  dispatch(addFile(e.target.files?.[0]));
                 }
               }}
             />

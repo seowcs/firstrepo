@@ -5,6 +5,7 @@ import axios from "axios";
 export interface userData {
     username: string;
     email: string;
+    id: number|string|null;
 }
 
 export interface userStateType {
@@ -20,7 +21,8 @@ const initialState= {
     isLoggedIn:false,
     data:{
         username:'',
-        email:''
+        email:'',
+        id:null
     }
 } as userStateType;
 
@@ -32,7 +34,7 @@ interface inputData {
 export const login = createAsyncThunk('auth/login',
    async (details: inputData) => {
     try {
-        const response = await axios.post('http://localhost:8800/auth/login', details);
+        const response = await axios.post('http://localhost:8800/auth/login', details,  { withCredentials: true });
         return response.data;
     } catch (error) {
         return error
@@ -41,7 +43,7 @@ export const login = createAsyncThunk('auth/login',
 
 export const authSlice = createSlice({
     name: 'auth',
-    initialState ,
+    initialState: localStorage.getItem('user') !== null  ? JSON.parse(localStorage.user) : initialState ,
     reducers: {
         logout(state: userStateType) {
             state.data = initialState.data

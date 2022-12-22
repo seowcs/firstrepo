@@ -16,9 +16,11 @@ import {
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const dispatch = useAppDispatch();
   const newState = useAppSelector((state) => state.authSlice)
+  const navigate = useNavigate();
   const user = localStorage.getItem('user') !== null  ? JSON.parse(localStorage.user) : {
     loading: false,
     error: "",
@@ -32,7 +34,7 @@ const Login = () => {
     username:'',
     password:''
   })
-  console.log(user)
+  console.log(newState)
 
 
   
@@ -45,7 +47,7 @@ const Login = () => {
   const handleSubmit = (e: any) => {
       e.preventDefault();
       dispatch(login(userInfo))
-      
+      navigate('/records')
     }
 
     useEffect(() => {
@@ -98,7 +100,7 @@ const Login = () => {
           <Button onClick={handleSubmit} bgColor="parsley" color="white">
             Login
           </Button>
-          <Text onClick={()=> {dispatch(logout())}}>Logout</Text>
+          
         </VStack>
       </Flex>
     </Center>

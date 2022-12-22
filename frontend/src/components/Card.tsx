@@ -26,12 +26,12 @@ interface CardProps {
 const InvCard = ({id, invNumber, time, supplierName}: CardProps) => {
   return (
     <>
-      <Card bgColor="white" variant="elevated">
+      <Card bgColor="white" variant="elevated" _hover={{boxShadow:'2xl'}}>
         <CardHeader>
           <Flex justify="space-between" align="center">
             <Heading size="md">Invoice {id}</Heading>
 
-            <IconButton colorScheme='red' size='sm' fontSize='13px' 
+            <IconButton colorScheme='red' size='xs' fontSize='10px' 
  aria-label='Delete Record' icon={<CloseIcon />} />
           </Flex>
         </CardHeader>

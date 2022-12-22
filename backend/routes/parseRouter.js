@@ -5,10 +5,9 @@ import * as mindee from "mindee";
 import fs from "fs";
 import { Blob } from "buffer";
 import { db } from '../db.js';
-import moment from "moment";
 
 const router = express.Router();
-const parseDate =  moment().format('MMMM Do YYYY, h:mm:ss a')
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'uploads')

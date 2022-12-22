@@ -8,19 +8,40 @@ import {
   InputRightElement,
   IconButton,
   Button,
+  Link
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Navbar from "../components/Navbar";
 import background from "../images/royalbluewhite.svg";
 import { TbFileInvoice } from "react-icons/tb";
 import InvCard from "../components/Card";
+import axios from "axios";
+
+interface CardData {
+  id: number;
+  invoicenumber: string;
+  parsedate: string;
+  suppliername: string;
+
+}
 
 const Records = () => {
 
+  const [records, setRecords] = useState<CardData[] | never[]>([])
   useEffect(() => {
-    
-  
+    const fetchData = async ()=> {
+      try {
+        const res = await axios.get('/records');
+        console.log(res.data);
+        setRecords(res.data)
+      }
+      catch(err) {
+              console.log(err);
+            }
+
+    }
+    fetchData();
 
   }, [])
   
@@ -33,7 +54,7 @@ const Records = () => {
         justify="flex-start"
         bgImage={background}
         width="100%"
-        height="100vh"
+        height="120vh"
         bgPosition="center"
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -58,10 +79,12 @@ const Records = () => {
         </Flex>
 
         <SimpleGrid minChildWidth="200px" width="90%" spacing="40px">
-          <InvCard id={1} invNumber="235432" time='' supplierName="re" />
-          <InvCard id={2} invNumber="3253" time='' supplierName="rerer" />
-          <InvCard id={3} invNumber="234234" time='' supplierName="wer" />
-          <InvCard id={4} invNumber="234243" time='' supplierName="SAF" />
+          {records.map((record, index) => (
+            <a href={`/records/${record.id}`}>
+            <InvCard key={record.id} id={record.id} invNumber={record.invoicenumber} time={record.parsedate} supplierName={record.suppliername} />
+            </a>
+            
+          ))}
         </SimpleGrid>
       </Flex>
     </div>

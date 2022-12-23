@@ -8,6 +8,8 @@ import Records from "./pages/Records";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Single from "./pages/Single";
+import All from "./pages/All";
+
 
 import "./App.scss";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -50,6 +52,10 @@ const router = createBrowserRouter([
     path: "/records/:id",
     element: <Single />,
   },
+  {
+    path:'/records/all',
+    element:<All/>
+  }
 ]);
 
 function App() {

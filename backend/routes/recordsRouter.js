@@ -1,13 +1,15 @@
 import express from 'express';
-import { getRecords, deleteRecord } from '../controllers/records.js';
+import { getRecords, deleteRecord, getRecord, updateRecord, getPdf
+  } from '../controllers/records.js';
 
 const router = express.Router();
 
 router.get('/', getRecords);
-// router.get('/:id', getRecord);
-// router.post('/', addRecord);
-// router.put('/:id', updateRecord);
+router.post('/:id', getRecord); 
+router.post('/:id/update', updateRecord);
 router.delete('/:id', deleteRecord);
+router.get('/:id/pdf', getPdf);
+
 
 
 

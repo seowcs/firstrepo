@@ -5,7 +5,7 @@ import {
   HStack,
   Input,
   InputGroup,
-  InputRightElement,
+  InputLeftElement,
   IconButton,
   Button,
   Link,
@@ -92,14 +92,15 @@ const Records = () => {
           </Heading>
 
           <HStack width='60%'>
-          <InputGroup pr="1px" width="80%" size="md">
-            <Input variant="solid" pr="4.5rem" placeholder="Search by..." onChange={(e)=> setSearchTerm(e.target.value)} />
-            <InputRightElement width="56px">
-              <IconButton h="2rem" aria-label="search" icon={<SearchIcon />} />
-            </InputRightElement>
+          <InputGroup pr="4px" width="80%" size="md">
+          <InputLeftElement width="40px" >
+              <SearchIcon h='2rem'/>
+            </InputLeftElement>
+            <Input variant="solid"  placeholder="Search by..." onChange={(e)=> setSearchTerm(e.target.value)} />
+
           </InputGroup>
 
-          <Select placeholder='Choice' width='20%'  onChange={handleChange}>
+          <Select border='2px solid black' placeholder='Choice' width='20%'  onChange={handleChange}>
           <option value='id'>ID</option>
           <option value='invoicenumber'>Invoice No.</option>
            <option value='parsedate'>Date of Parsing</option>
@@ -107,10 +108,12 @@ const Records = () => {
           </Select>
           </HStack>
           
-
+          <Link href="/records/all">
           <Button bgColor="royalblue" color="white">
             Export All
           </Button>
+          </Link>
+          
         </Flex>
 
         <SimpleGrid minChildWidth="200px"  width="90%" spacing="40px" alignItems='flex-start'>
@@ -127,8 +130,7 @@ const Records = () => {
                console.log(err);
               }
              }} href={`/records/${record.id}`} key={record.id} id={record.id} invNumber={record.invoicenumber} time={record.parsedate} supplierName={record.suppliername} />
-            
-            
+
           ))}
         </SimpleGrid>
       </Flex>

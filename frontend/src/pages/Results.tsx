@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Navbar from "../components/Navbar";
 import { parseInvoice, handleClick } from "../features/info/infoSlice";
 import background from "../images/royalbluewhite.svg";
-import image from "../images/wave.png";
+import image from "../images/wave.png"; 
 import { ClickEventArgs } from '@syncfusion/ej2-navigations';
 import {  ColumnDirective, ColumnsDirective,GridComponent, ToolbarItems } from "@syncfusion/ej2-react-grids";
 import { ExcelExport, Edit, Inject, Toolbar, Grid } from '@syncfusion/ej2-react-grids';
@@ -86,7 +86,7 @@ const Results = (props: Props) => {
     <Flex
       bgImage={background}
       width="100%"
-      height="180vh"
+      
       direction="column"
       bgSize="cover"
       position="relative"
@@ -97,7 +97,7 @@ const Results = (props: Props) => {
         className="textbox"
         px="100px"
         mt="30px"
-        mb="20px"
+        
         height='80%'
         direction="column"
         align="center"
@@ -139,7 +139,7 @@ const Results = (props: Props) => {
           height: '80%',
           width: '70%',
           
-      }} my={10}>
+      }} mt={10}>
         
           <Viewer fileUrl={ newURL || pdfDataURL} plugins={[defaultLayoutPluginInstance]} />
           </Box>
@@ -150,7 +150,7 @@ const Results = (props: Props) => {
 
           <Link to="/">
             <Button
-            mt={5}
+            my={8}
               zIndex="1"
               bgColor="parsley"
               variant="solid"
@@ -164,16 +164,7 @@ const Results = (props: Props) => {
         
       </Flex>
 
-      <Box width="100%" position="absolute" bottom="0" height="200px">
-        <Image
-          position="absolute"
-          bottom="0"
-          width="100%"
-          src={image}
-          alt=""
-          objectFit="cover"
-        />
-      </Box>
+
     </Flex>
   );
 };

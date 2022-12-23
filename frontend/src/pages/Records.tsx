@@ -8,14 +8,15 @@ import {
   InputRightElement,
   IconButton,
   Button,
-  Link
+  Link,
+  Select
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import {useEffect, useState} from "react";
 import Navbar from "../components/Navbar";
 import background from "../images/royalbluewhite.svg";
 import { TbFileInvoice } from "react-icons/tb";
-import InvCard from "../components/Card";
+import InvCard from "../components/InvCard";
 import axios from "axios";
 
 interface CardData {
@@ -29,12 +30,19 @@ interface CardData {
 const Records = () => {
 
   const [records, setRecords] = useState<CardData[] | never[]>([])
+  const [choice, setChoice] = useState<string>('')
+
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [unfilteredData, setUnfilteredData] = useState<CardData[] | never[]>([])
+  console.log(choice)
   useEffect(() => {
     const fetchData = async ()=> {
       try {
         const res = await axios.get('/records');
         console.log(res.data);
-        setRecords(res.data)
+        setUnfilteredData(res.data);
+
+
       }
       catch(err) {
               console.log(err);
@@ -43,7 +51,29 @@ const Records = () => {
     }
     fetchData();
 
+
   }, [])
+
+  useEffect(() => {
+    const filteredData:any = unfilteredData.filter((card: CardData)=> {
+    if (choice=='id') { return card.id.toString().toLowerCase().includes(searchTerm.toLowerCase())}
+    else if (choice=='suppliername') {return card.suppliername.toLowerCase().includes(searchTerm.toLowerCase())}
+    else if (choice=='parsedate') {return card.parsedate.toLowerCase().includes(searchTerm.toLowerCase())}
+    else if (choice=='invoicenumber') {return card.invoicenumber.toLowerCase().includes(searchTerm.toLowerCase())}
+    else {return card}
+    })
+
+    setRecords(filteredData)
+  
+  }, [searchTerm, unfilteredData, choice])
+
+  const handleChange=(e: React.ChangeEvent<HTMLSelectElement>)=> {
+    
+    setChoice(e.target.value)
+    
+     
+      }
+  
   
 
   return (
@@ -66,23 +96,33 @@ const Records = () => {
             Your <span style={{ color: "#5a9f4d" }}>Records</span>
           </Heading>
 
-          <InputGroup pr="1px" width="50%" size="md">
-            <Input variant="solid" pr="4.5rem" placeholder="Search" />
+          <HStack width='60%'>
+          <InputGroup pr="1px" width="80%" size="md">
+            <Input variant="solid" pr="4.5rem" placeholder="Search by..." onChange={(e)=> setSearchTerm(e.target.value)} />
             <InputRightElement width="56px">
               <IconButton h="2rem" aria-label="search" icon={<SearchIcon />} />
             </InputRightElement>
           </InputGroup>
+
+          <Select placeholder='Choice' width='20%'  onChange={handleChange}>
+          <option value='id'>ID</option>
+          <option value='invoicenumber'>Invoice No.</option>
+           <option value='parsedate'>Date of Parsing</option>
+           <option value='suppliername'>Supplier Name</option>
+          </Select>
+          </HStack>
+          
 
           <Button bgColor="royalblue" color="white">
             Export All
           </Button>
         </Flex>
 
-        <SimpleGrid minChildWidth="200px" width="90%" spacing="40px">
+        <SimpleGrid minChildWidth="200px"  width="90%" spacing="40px" alignItems='flex-start'>
           {records.map((record, index) => (
-            <a href={`/records/${record.id}`}>
-            <InvCard key={record.id} id={record.id} invNumber={record.invoicenumber} time={record.parsedate} supplierName={record.suppliername} />
-            </a>
+            
+            <InvCard href={`/records/${record.id}`} key={record.id} id={record.id} invNumber={record.invoicenumber} time={record.parsedate} supplierName={record.suppliername} />
+            
             
           ))}
         </SimpleGrid>

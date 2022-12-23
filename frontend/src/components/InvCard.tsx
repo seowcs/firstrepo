@@ -10,7 +10,8 @@ import {
   VStack,
   Text,
   Box,
-  IconButton
+  IconButton,
+  Link
 } from "@chakra-ui/react";
 import { CloseIcon } from '@chakra-ui/icons'
 
@@ -20,13 +21,16 @@ interface CardProps {
   invNumber:string;
   time: string;
   supplierName: string;
+  href: string;
+
 }
 
 
-const InvCard = ({id, invNumber, time, supplierName}: CardProps) => {
+const InvCard = ({id, invNumber, time, supplierName, href}: CardProps) => {
   return (
     <>
-      <Card bgColor="white" variant="elevated" _hover={{boxShadow:'2xl'}}>
+      <Card maxWidth={['400px',null, '300px','250px']} bgColor="white" variant="elevated" _hover={{boxShadow:'2xl'}}>
+        <Link href={href} width='100%' _hover={{textDecoration:'none'}} >
         <CardHeader>
           <Flex justify="space-between" align="center">
             <Heading size="md">Invoice {id}</Heading>
@@ -54,6 +58,7 @@ const InvCard = ({id, invNumber, time, supplierName}: CardProps) => {
             </Text>
           </VStack>
         </CardBody>
+        </Link>
       </Card>
     </>
   );

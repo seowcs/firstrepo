@@ -1,5 +1,5 @@
 import express from 'express';
-import { getRecords } from '../controllers/records.js';
+import { getRecords, deleteRecord } from '../controllers/records.js';
 
 const router = express.Router();
 
@@ -7,7 +7,7 @@ router.get('/', getRecords);
 // router.get('/:id', getRecord);
 // router.post('/', addRecord);
 // router.put('/:id', updateRecord);
-// router.delete('/:id', deleteRecord);
+router.delete('/:id', deleteRecord);
 
 
 

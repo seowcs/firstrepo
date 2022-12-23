@@ -12,7 +12,7 @@ import {
   Select
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useMemo} from "react";
 import Navbar from "../components/Navbar";
 import background from "../images/royalbluewhite.svg";
 import { TbFileInvoice } from "react-icons/tb";
@@ -35,24 +35,22 @@ const Records = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [unfilteredData, setUnfilteredData] = useState<CardData[] | never[]>([])
   console.log(choice)
-  useEffect(() => {
-    const fetchData = async ()=> {
-      try {
-        const res = await axios.get('/records');
-        console.log(res.data);
-        setUnfilteredData(res.data);
-
-
-      }
-      catch(err) {
-              console.log(err);
-            }
-
+  console.log(unfilteredData)
+  const fetchData = async ()=> {
+    try {
+      const res = await axios.get('/records');
+      console.log(res.data);
+      setUnfilteredData(res.data);
     }
-    fetchData();
+    catch(err) {
+            console.log(err);
+          }
+  }
 
-
+  useEffect(() => {
+    fetchData()
   }, [])
+  
 
   useEffect(() => {
     const filteredData:any = unfilteredData.filter((card: CardData)=> {
@@ -67,12 +65,9 @@ const Records = () => {
   
   }, [searchTerm, unfilteredData, choice])
 
-  const handleChange=(e: React.ChangeEvent<HTMLSelectElement>)=> {
-    
+  const handleChange=(e: React.ChangeEvent<HTMLSelectElement>)=> {   
     setChoice(e.target.value)
-    
-     
-      }
+    }
   
   
 
@@ -120,8 +115,18 @@ const Records = () => {
 
         <SimpleGrid minChildWidth="200px"  width="90%" spacing="40px" alignItems='flex-start'>
           {records.map((record, index) => (
+      
             
-            <InvCard href={`/records/${record.id}`} key={record.id} id={record.id} invNumber={record.invoicenumber} time={record.parsedate} supplierName={record.suppliername} />
+            <InvCard handleClick={ async () => {
+              try{
+               const response = await axios.delete(`/records/${record.id}`);
+               console.log(response.data);
+               fetchData();
+              }
+              catch(err){
+               console.log(err);
+              }
+             }} href={`/records/${record.id}`} key={record.id} id={record.id} invNumber={record.invoicenumber} time={record.parsedate} supplierName={record.suppliername} />
             
             
           ))}

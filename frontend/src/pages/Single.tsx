@@ -78,7 +78,7 @@ const Single = () => {
     <Flex
       bgImage={background}
       width="100%"
-      
+      minHeight='100vh'
       direction="column"
       bgSize="cover"
       position="relative"
@@ -99,6 +99,7 @@ const Single = () => {
       toolbar={ toolbar} toolbarClick={toolbarClick} ref={g=> grid = g} 
       excelExportComplete={excelExportComplete}>
       <ColumnsDirective>
+      <ColumnDirective field='id' headerText="ID" allowEditing= {false} />
         <ColumnDirective field='invoicenumber' headerText="Invoice Number"/>
         <ColumnDirective field='customername' headerText="Customer Name"/>
         <ColumnDirective field='customeraddress' headerText="Customer Address"/>

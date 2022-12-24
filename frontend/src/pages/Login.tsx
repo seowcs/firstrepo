@@ -47,14 +47,11 @@ const Login = () => {
   const handleSubmit = (e: any) => {
       e.preventDefault();
       dispatch(login(userInfo))
-      navigate('/records')
+      
+        navigate('/records')
+      
     }
 
-    useEffect(() => {
-      console.log()
-    
-      
-    }, [localStorage])
     
 
   return (

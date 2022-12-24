@@ -15,7 +15,6 @@ const All = () => {
     const baseURL: string = 'http://localhost:8800/exports'
   const data: DataManager = new DataManager({
     adaptor: new UrlAdaptor(),
-    insertUrl: baseURL + '/insert',
     updateUrl: baseURL + '/update',
     removeUrl: baseURL + '/remove',
     url: baseURL,
@@ -24,7 +23,7 @@ const All = () => {
 
   let grid: Grid | null;
   
-  const toolbar: ToolbarItems[] = [ 'Edit', 'Update', 'Cancel', 'ExcelExport'];
+  const toolbar: ToolbarItems[] = [ 'Edit', 'Cancel','Update', 'Delete',  'ExcelExport'];
   const toolbarClick = (args: ClickEventArgs) => {  
       if (grid && args.item.id?.includes('excelexport')){
         grid.showSpinner();
@@ -67,7 +66,7 @@ const All = () => {
       toolbar={ toolbar} toolbarClick={toolbarClick} ref={g=> grid = g} 
       excelExportComplete={excelExportComplete}>
       <ColumnsDirective>
-      <ColumnDirective field='id' headerText="ID"/>
+      <ColumnDirective field='id' headerText="ID" allowEditing= {false} />
         <ColumnDirective field='invoicenumber' headerText="Invoice Number"/>
         <ColumnDirective field='customername' headerText="Customer Name"/>
         <ColumnDirective field='customeraddress' headerText="Customer Address"/>

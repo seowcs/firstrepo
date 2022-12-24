@@ -18,6 +18,7 @@ import background from "../images/royalbluewhite.svg";
 import { TbFileInvoice } from "react-icons/tb";
 import InvCard from "../components/InvCard";
 import axios from "axios";
+import { useAppSelector } from "../app/hooks";
 
 interface CardData {
   id: number;
@@ -28,13 +29,14 @@ interface CardData {
 }
 
 const Records = () => {
-
+  const isLoggedIn = useAppSelector((state)=> state.authSlice.isLoggedIn)
   const [records, setRecords] = useState<CardData[] | never[]>([])
   const [choice, setChoice] = useState<string>('')
+  const [loading, setLoading] = useState(true)
 
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [unfilteredData, setUnfilteredData] = useState<CardData[] | never[]>([])
-  console.log(choice)
+
   console.log(unfilteredData)
   const fetchData = async ()=> {
     try {
@@ -48,6 +50,9 @@ const Records = () => {
   }
 
   useEffect(() => {
+    
+    setTimeout(fetchData,500)
+
     fetchData()
   }, [])
   
@@ -86,7 +91,8 @@ const Records = () => {
         position="absolute"
       >
         <Navbar />
-        <Flex width="90%" justify="space-between" align="center">
+        
+        <Flex width="90%" justify="space-between" align="center" >
           <Heading alignSelf="flex-start" m="20px 0 30px">
             Your <span style={{ color: "#5a9f4d" }}>Records</span>
           </Heading>
@@ -115,8 +121,8 @@ const Records = () => {
           </Link>
           
         </Flex>
-
-        <SimpleGrid minChildWidth="200px"  width="90%" spacing="40px" alignItems='flex-start'>
+        
+        <SimpleGrid minChildWidth="200px"  maxWidth="90%" spacing="40px" alignItems='flex-start'>
           {records.map((record, index) => (
       
             
@@ -133,7 +139,9 @@ const Records = () => {
 
           ))}
         </SimpleGrid>
-      </Flex>
+        </Flex>
+        
+      
     </div>
   );
 };

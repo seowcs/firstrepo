@@ -86,7 +86,7 @@ const Results = (props: Props) => {
     <Flex
       bgImage={background}
       width="100%"
-      
+      minHeight='100vh'
       direction="column"
       bgSize="cover"
       position="relative"

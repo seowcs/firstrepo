@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useNavigate } from "react-router";
+
+
 
 export interface userData {
     username: string;
@@ -33,12 +36,16 @@ interface inputData {
 
 export const login = createAsyncThunk('auth/login',
    async (details: inputData) => {
+    
     try {
+        
         const response = await axios.post('http://localhost:8800/auth/login', details,  { withCredentials: true });
+        
         return response.data;
+        
     } catch (error) {
         return error
-    }
+    } 
        })
 
 export const authSlice = createSlice({
@@ -63,6 +70,7 @@ export const authSlice = createSlice({
             state.isLoggedIn = true;
             Object.assign(state.data,action.payload);
             localStorage.setItem("user", JSON.stringify(state));
+            
         } );
 
         builder.addCase(login.rejected, (state, action) => {

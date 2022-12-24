@@ -1,7 +1,7 @@
 import { db } from '../db.js';
 import jwt from 'jsonwebtoken';
-import fs from "fs";
-export const getRecords = (req,res) => {
+import fs from "fs"; 
+export const getRecords = (req,res) => { 
     const token = req.cookies.access_token
     if(!token) return res.status(401).json("Not authenticated");
 
@@ -20,7 +20,7 @@ export const getRecord = (req,res) => {
         console.log(req)
         const userId = req.headers.uid   
         const recordId = req.params.id;
-        const q = 'SELECT invoicenumber, customername, customeraddress, suppliername, supplieraddress, invoicedate, currency, totalamount, totaltax, parsedate FROM records WHERE id=? AND uid =?';
+        const q = 'SELECT invoicenumber, customername, customeraddress, suppliername, supplieraddress, invoicedate, currency, totalamount, totaltax, parsedate,id FROM records WHERE id=? AND uid =?';
         db.query(q, [recordId, userId], (err, results)=>{
             if (err) return res.status(500).json(err);
             const responseObj = {
@@ -54,10 +54,10 @@ export const getPdf = (req, res)=> {
 
 export const updateRecord = (req, res) => {
     const userId = req.headers.uid
-    const postId = req.params.id;
+    const recordId = req.params.id;
     const valueObj = req.body.value
     const q = 'UPDATE records SET invoicenumber = ?, customername = ?, customeraddress = ?, suppliername = ?, supplieraddress = ?, invoicedate = ?, currency = ?, totalamount = ?, totaltax = ? WHERE id=? AND uid =?';
-    const values = [valueObj.invoicenumber, valueObj.customername, valueObj.customeraddress, valueObj.suppliername, valueObj.supplieraddress, valueObj.invoicedate, valueObj.currency, valueObj.totalamount, valueObj.totaltax, postId, userId]
+    const values = [valueObj.invoicenumber, valueObj.customername, valueObj.customeraddress, valueObj.suppliername, valueObj.supplieraddress, valueObj.invoicedate, valueObj.currency, valueObj.totalamount, valueObj.totaltax, recordId, userId]
 
     db.query(q,values, (err, results)=>{
         if (err) return res.status(500).json(err);

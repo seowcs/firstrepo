@@ -46,7 +46,6 @@ const Home = (props: Props) => {
     console.log(formData);
 
     dispatch(parseInvoice(formData));
-
     navigate("/results");
   };
 

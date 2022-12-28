@@ -25,7 +25,7 @@ const initialState= {
     data:{
         username:'',
         email:'',
-        id:null
+        id:0
     }
 } as userStateType;
 

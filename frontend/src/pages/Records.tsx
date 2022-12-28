@@ -33,6 +33,13 @@ const Records = () => {
   const [records, setRecords] = useState<CardData[] | never[]>([])
   const [choice, setChoice] = useState<string>('')
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postsPerPage, setPostsPerPage] = useState(12)
+  const lastRecordIndex = currentPage * postsPerPage
+  const firstRecordIndex = lastRecordIndex - postsPerPage
+
+
+
 
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [unfilteredData, setUnfilteredData] = useState<CardData[] | never[]>([])
@@ -70,10 +77,18 @@ const Records = () => {
   
   }, [searchTerm, unfilteredData, choice])
 
+  const currentRecords = records.slice(firstRecordIndex, lastRecordIndex)
+  
+
   const handleChange=(e: React.ChangeEvent<HTMLSelectElement>)=> {   
     setChoice(e.target.value)
     }
   
+    let pages = []
+    for(let i=1; i<=Math.ceil(records.length/postsPerPage) ; i++) {
+      pages.push(i)
+    }
+    console.log(pages)
   
 
   return (
@@ -83,8 +98,9 @@ const Records = () => {
         align="center"
         justify="flex-start"
         bgImage={background}
-        width="100%"
-        height="120vh"
+        minHeight="100vh"
+        width='100%'
+        pb={5}
         bgPosition="center"
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -122,8 +138,8 @@ const Records = () => {
           
         </Flex>
         
-        <SimpleGrid minChildWidth="200px"  maxWidth="90%" spacing="40px" alignItems='flex-start'>
-          {records.map((record, index) => (
+        <SimpleGrid minChildWidth="200px"  maxWidth="90%" spacing="40px" alignItems='flex-start' mb={5}>
+          {currentRecords.map((record, index) => (
       
             
             <InvCard handleClick={ async () => {
@@ -139,6 +155,16 @@ const Records = () => {
 
           ))}
         </SimpleGrid>
+        
+        <HStack>
+        {pages.map((page,index)=>{
+          return(
+            <Button key={index} _active={{bgColor:'royalblue'}} className={page==currentPage ? 'active' : ''}  onClick={()=>setCurrentPage(page)}>{page}</Button>
+          )
+            
+        })}
+        </HStack>
+
         </Flex>
         
       

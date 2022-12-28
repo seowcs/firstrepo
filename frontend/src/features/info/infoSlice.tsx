@@ -4,7 +4,7 @@ import axios from "axios";
 
 export interface invoiceData {
   invoiceNumber: number | undefined | null;
-  customerName: string | undefined | null;
+  customerName: string | undefined | null; 
   customerAddress: string | undefined | null;
   supplierName: string | undefined | null;
   supplierAddress: string | undefined | null;

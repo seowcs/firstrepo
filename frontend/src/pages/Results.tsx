@@ -22,7 +22,9 @@ const Results = (props: Props) => {
   const [pdfDataURL, setPdfDataURL] = useState<any>(null)
   const dispatch = useAppDispatch();
   const newState = useAppSelector((state) => state.infoSlice);
+  const authState = useAppSelector((state) => state.authSlice);
   console.log(newState);
+  console.log(authState)
   const { file, ...tableData} = newState.data
   
   const baseURL: string = 'http://localhost:8800/parse'
@@ -57,21 +59,6 @@ const Results = (props: Props) => {
         grid.hideSpinner();
     }
   };
-  // const invoiceObj = [
-  //   {
-  //     invoiceNumber: "2022-07-001",
-  //     customerName: "YUEN SIK WENG",
-  //     customerAddress: "11 Upper Boon Keng Road #16-919 Singapore 380011",
-  //     supplierName: "LIAN SOON CONSTRUCTION PTE LTD",
-  //     supplierAddress:
-  //       "21A Senoko Loop, Lian Soon Industrial Building Singapore 758174",
-  //     invoiceDate: "2022-07-04",
-  //     currency: "SGD",
-  //     totalAmount: 1500,
-  //     totalNet: 1500,
-  //     totalTax: 0
-  //   },
-  // ];
 
   const dataSourceChanged=(state: any)=> {
       console.log(state);
@@ -110,7 +97,7 @@ const Results = (props: Props) => {
   color='royalblue'
   size='xl'/>}  
 
-      { (!newState?.loading) && (newState.data?.file) &&
+      {(!newState?.loading) && (newState.data?.file) &&
       <GridComponent dataSource={data} dataSourceChanged={dataSourceChanged} allowExcelExport={true}
        editSettings={{ allowEditing: true, allowAdding: true, allowDeleting: true }}
       toolbar={ toolbar} toolbarClick={toolbarClick} ref={g=> grid = g} 
@@ -130,6 +117,9 @@ const Results = (props: Props) => {
     </ColumnsDirective>
     <Inject services={[Edit, Toolbar, ExcelExport]} />
         </GridComponent> }
+
+        
+      
       
       
         {(!newState?.loading) && (newState.data?.file) &&

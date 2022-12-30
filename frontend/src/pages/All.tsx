@@ -83,7 +83,17 @@ const All = () => {
         </GridComponent> 
         
         </Flex>
-           
+        <Link to="/records">
+            <Button
+              zIndex="1"
+              bgColor="royalblue"
+              variant="solid"
+              color="white"
+              mt={8}
+            >
+              Back to Records
+            </Button>
+          </Link>
         </Flex>
     
     )

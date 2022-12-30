@@ -9,7 +9,8 @@ import {
   IconButton,
   Button,
   Link,
-  Select
+  Select,
+  Box
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import {useEffect, useState, useMemo} from "react";
@@ -37,6 +38,8 @@ const Records = () => {
   const [postsPerPage, setPostsPerPage] = useState(12)
   const lastRecordIndex = currentPage * postsPerPage
   const firstRecordIndex = lastRecordIndex - postsPerPage
+  const [error, setError] = useState<string|null>(null)
+
 
 
 
@@ -44,15 +47,18 @@ const Records = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [unfilteredData, setUnfilteredData] = useState<CardData[] | never[]>([])
 
-  console.log(unfilteredData)
   const fetchData = async ()=> {
     try {
       const res = await axios.get('/records');
-      console.log(res.data);
       setUnfilteredData(res.data);
     }
     catch(err) {
-            console.log(err);
+      if (err instanceof Error) {
+        console.log(err.message);
+        setError(err.message);
+      } else {
+        console.log('Unexpected error', err);
+      }
           }
   }
 
@@ -88,9 +94,6 @@ const Records = () => {
     for(let i=1; i<=Math.ceil(records.length/postsPerPage) ; i++) {
       pages.push(i)
     }
-    console.log(pages)
-  
-
   return (
     <div>
       <Flex
@@ -107,14 +110,16 @@ const Records = () => {
         position="absolute"
       >
         <Navbar />
+        {/* {error && <Heading mt={5}>{error}</Heading>} */}
         
-        <Flex width="90%" justify="space-between" align="center" >
+          <>
+          <Flex width="90%" justify="space-between" align="center" >
           <Heading alignSelf="flex-start" m="20px 0 30px">
             Your <span style={{ color: "#5a9f4d" }}>Records</span>
           </Heading>
 
           <HStack width='60%'>
-          <InputGroup pr="4px" width="80%" size="md">
+          <InputGroup pr="4px" width="75%" size="md">
           <InputLeftElement width="40px" >
               <SearchIcon h='2rem'/>
             </InputLeftElement>
@@ -122,12 +127,15 @@ const Records = () => {
 
           </InputGroup>
 
-          <Select border='2px solid black' placeholder='Choice' width='20%'  onChange={handleChange}>
+          
+          <Select  placeholder='All' width='25%'  onChange={handleChange}>
           <option value='id'>ID</option>
           <option value='invoicenumber'>Invoice No.</option>
            <option value='parsedate'>Date of Parsing</option>
            <option value='suppliername'>Supplier Name</option>
           </Select>
+          
+          
           </HStack>
           
           <Link href="/records/all">
@@ -137,6 +145,9 @@ const Records = () => {
           </Link>
           
         </Flex>
+
+        
+
         
         <SimpleGrid minChildWidth="200px"  maxWidth="90%" spacing="40px" alignItems='flex-start' mb={5}>
           {currentRecords.map((record, index) => (
@@ -164,6 +175,8 @@ const Records = () => {
             
         })}
         </HStack>
+        </>
+        
 
         </Flex>
         

@@ -19,10 +19,12 @@ import { useNavigate } from "react-router";
 
 const Register = () => {
   const [input, setInput] = useState({
-    username: null,
-    email: null,
-    password: null,
+    username: '',
+    email: '',
+    password: '',
   });
+  const [ error, setError ] = useState<string|null>(null);
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
 
   const navigate = useNavigate();
 
@@ -33,13 +35,28 @@ const Register = () => {
   };
  
   const handleClick = async (e: any) => {
-    e.preventDefault();
+    if (input.username === ''){
+      setError("Username is required");
+    }
+    else if (input.email === ''){
+      setError("Email Address is required");
+    }
+    else if (input.password === ''){
+      setError("Password is required");
+    }
+    else if (confirmPassword === ''){
+      setError('Please confirm your password');
+    }
+    else {
+      e.preventDefault();
     try {
       await axios.post("/auth/register", input);
       navigate("/login");
     } catch (error) {
       console.log(error);
     }
+    }
+    
   };
 
   console.log(samePassword);
@@ -101,6 +118,7 @@ const Register = () => {
               type="password"
               variant="solid"
               onChange={(e) => {
+                setConfirmPassword(e.target.value)
                 e.target.value == input.password
                   ? setSamePassword(true)
                   : setSamePassword(false);
@@ -120,6 +138,8 @@ const Register = () => {
               Log in
             </Link>
           </Text>
+          {error && <Text color='red' fontSize={["xs", "sm"]}>{error}</Text>}
+
           <Button
             isDisabled={samePassword ? false : true}
             bgColor="parsley"

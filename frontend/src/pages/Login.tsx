@@ -34,6 +34,8 @@ const Login = () => {
     username:'',
     password:''
   })
+  const [error, setError] = useState<string| null>(null)
+
   console.log(newState)
 
 
@@ -45,10 +47,19 @@ const Login = () => {
    }
 
   const handleSubmit = (e: any) => {
-      e.preventDefault();
+      if (userInfo.username === "") {
+        setError("Username is required")
+      }
+
+      else if (userInfo.password === "") {
+        setError("Password is required")
+       
+      }
+
+      else {e.preventDefault();
       dispatch(login(userInfo))
       
-        navigate('/records')
+        navigate('/records')}
       
     }
 
@@ -94,6 +105,9 @@ const Login = () => {
               Register
             </Link>
           </Text>
+
+          {error && <Text color='red' fontSize={["xs", "sm"]}>{error}</Text>}
+
           <Button onClick={handleSubmit} bgColor="parsley" color="white">
             Login
           </Button>

@@ -23,6 +23,7 @@ const Results = (props: Props) => {
   const dispatch = useAppDispatch();
   const newState = useAppSelector((state) => state.infoSlice);
   const authState = useAppSelector((state) => state.authSlice);
+  const userId = authState.data.id
   console.log(newState);
   console.log(authState)
   const { file, ...tableData} = newState.data
@@ -31,7 +32,8 @@ const Results = (props: Props) => {
   const data: DataManager = new DataManager({
     adaptor: new UrlAdaptor(),
     updateUrl: baseURL + '/data/update',
-    url: baseURL + '/data'
+    url: baseURL + '/data',
+    headers:[{uid: userId}]
   })
 
   let reader = new FileReader();

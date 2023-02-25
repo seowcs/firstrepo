@@ -32,7 +32,7 @@ router.post('/',  upload.single('file'), (req,res)=>{
     const parseInvoice = async () => {
         try {
             
-            const doc = mindeeClient.docFromPath(`C:/Users/Xu Hong/OneDrive/Desktop/invoiceapp/backend/uploads/${file.filename}`);
+            const doc = mindeeClient.docFromPath(`C:/Users/Admin/Desktop/invoiceapp/backend/uploads/${file.filename}`);
             const resp = await doc.parse(mindee.InvoiceV4);
     
             
@@ -45,7 +45,7 @@ router.post('/',  upload.single('file'), (req,res)=>{
             const currency = resp.document.locale?.currency;
             const totalAmount= resp.document.totalAmount?.value; 
             const totalTax = resp.document.totalTax?.value;
-            const fileURL =`C:/Users/Xu Hong/OneDrive/Desktop/invoiceapp/backend/uploads/${file.filename}`
+            const fileURL =`C:/Users/Admin/Desktop/invoiceapp/backend/uploads/${file.filename}`
             
     
             console.log(uid, parseDate);
@@ -53,7 +53,7 @@ router.post('/',  upload.single('file'), (req,res)=>{
             const q = ' INSERT INTO records (invoicenumber, customername, customeraddress, suppliername, supplieraddress, invoicedate, currency, totalamount, totaltax, fileurl, parsedate, uid ) VALUES (?)'
             const values = [invoiceNumber, customerName, customerAddress, supplierName, supplierAddress, invoiceDate, currency, totalAmount, totalTax, fileURL, parseDate,uid ]
 
-            let buffer = fs.readFileSync(`C:/Users/Xu Hong/OneDrive/Desktop/invoiceapp/backend/uploads/${file.filename}`);
+            let buffer = fs.readFileSync(`C:/Users/Admin/Desktop/invoiceapp/backend/uploads/${file.filename}`);
     
             const b64 = buffer.toString('base64')
             

@@ -46,7 +46,7 @@ const Login = () => {
     
    }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
       if (userInfo.username === "") {
         setError("Username is required")
       }
@@ -57,9 +57,13 @@ const Login = () => {
       }
 
       else {e.preventDefault();
-      dispatch(login(userInfo))
-      
-        navigate('/records')}
+      const promise = await dispatch(login(userInfo))
+      console.log('promise:',promise)
+      if (promise.payload?.response) {
+        const errorMsg = promise.payload?.response
+        console.log(errorMsg.data, errorMsg.status)
+      }
+      else navigate('/records')}
       
     }
 

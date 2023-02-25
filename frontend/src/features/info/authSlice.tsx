@@ -34,6 +34,8 @@ interface inputData {
     password: string;
 }
 
+
+
 export const login = createAsyncThunk('auth/login',
    async (details: inputData) => {
     
@@ -43,8 +45,11 @@ export const login = createAsyncThunk('auth/login',
         
         return response.data;
         
+        
     } catch (error) {
+        console.log(error);
         return error
+        
     } 
        })
 
